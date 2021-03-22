@@ -173,13 +173,18 @@ def skin():
 @app.route("/predict_skin", methods=['GET', 'POST'])
 def predict_skin():
     if request.method=='POST':
-        f = request.files['file']
+        file = request.files['file'] # fet input
+        filename = file.filename        
+        print("@@ Input posted = ", filename)
+         
+        file_path = os.path.join('static/images', filename)
+        file.save(file_path)
 
         # Save the file to ./uploads
-        basepath = os.path.dirname(__file__)
-        file_path = os.path.join(
-        basepath, 'uploads', secure_filename(f.filename))
-        f.save(file_path)
+        # basepath = os.path.dirname(__file__)
+        # file_path = os.path.join(
+        # basepath, 'uploads', secure_filename(f.filename))
+        # f.save(file_path)
 
         # Make prediction
         preds = pred_skin(file_path)
